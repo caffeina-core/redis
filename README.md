@@ -1,4 +1,4 @@
-Core Cache Module – Redis
+Core - Redis cache
 ====
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/caffeina-core/redis/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/caffeina-core/redis/?branch=master)
