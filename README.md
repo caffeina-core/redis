@@ -11,6 +11,22 @@ Core - Redis cache
 
 Redis cache driver for [Core](https://github.com/caffeina-core/core).
 
+## Installation
+
+Add package to your **composer.json**:
+
+```json
+{
+  "require": {
+    "caffeina-core/core": "dev-master",
+    "caffeina-core/redis": "dev-master"
+  }
+}
+```
+
+## Enable driver
+
 ```php
 Cache::using('redis');
 ```
+
