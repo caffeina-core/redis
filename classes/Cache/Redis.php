@@ -51,11 +51,11 @@ class Redis implements \CacheInterface {
   }
 
   public function get($key){
-    return $this->redis->get($key);
+    return unserialize($this->redis->get($key));
   }
 
   public function set($key,$value,$expire=0){
-    $expire ? $this->redis->setex($key,$expire,$value) : $this->redis->set($key,$value);
+    $expire ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
   }
 
   public function delete($key){
