@@ -13,15 +13,10 @@ Redis cache driver for [Core](https://github.com/caffeina-core/core).
 
 ## Installation
 
-Add package to your **composer.json**:
+Install via [composer](https://getcomposer.org/download/):
 
-```json
-{
-  "require": {
-    "caffeina-core/core": "dev-master",
-    "caffeina-core/redis": "dev-master"
-  }
-}
+```bash
+$ composer require caffeina-core/redis -o
 ```
 
 ## Enable driver
