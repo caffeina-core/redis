@@ -14,10 +14,10 @@
     ],
     "require": {
       "php": ">=5.4",
-      "caffeina-core/core": "dev-master",
+      "caffeina-core/core": "~1",
       "predis/predis": "*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "classmap": [ "classes/" ]
     }
