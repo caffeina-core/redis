@@ -14,7 +14,7 @@
 
 namespace Cache;
 
-class Redis implements \CacheInterface {
+class Redis implements Adapter {
 
   protected $redis = null;
   protected $options = [
