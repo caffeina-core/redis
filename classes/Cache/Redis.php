@@ -4,7 +4,7 @@
  * Cache\Redis
  *
  * Core\Cache Redis Driver.
- * 
+ *
  * @package core
  * @author stefano.azzolini@caffeinalab.com
  * @version 1.0
@@ -25,6 +25,7 @@ class Redis implements Adapter {
     'reconnect'   => 100,
     'prefix'      => '',
     'serialize'   => true,
+    'database'    => 0,
     'exceptions'  => true,
   ];
 
@@ -32,19 +33,24 @@ class Redis implements Adapter {
     return true;
   }
 
+  public function instance(){
+    return $redis;
+  }
+
   public function __construct($opt=[]){
     /**
      * Predis Docs:
      * https://github.com/nrk/predis
      */
-    //require_once __DIR__.'/predis_0.8.7-dev.phar';
     $this->options = array_merge($opt,$this->options);
     try {
       $this->redis = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/',[
         'prefix'              => 'core:'.$this->options['prefix'],
         'exceptions'          => $this->options['exceptions'],
         'connection_timeout'  => $this->options['timeout'],
+        'database'            => $this->options['database'],
       ]);
+      $this->redis->select($this->options['database']);
     } catch ( Exception $e ) {
       die($e);
     }
