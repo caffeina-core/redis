@@ -33,7 +33,7 @@ class Redis implements Adapter {
     return true;
   }
 
-  public static function instance(){
+  public function instance(){
     return $redis;
   }
 
