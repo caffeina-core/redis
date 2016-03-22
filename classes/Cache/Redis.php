@@ -33,7 +33,7 @@ class Redis implements Adapter {
     return true;
   }
 
-  public function instance(){
+  public static function instance(){
     return $redis;
   }
 
@@ -43,17 +43,13 @@ class Redis implements Adapter {
      * https://github.com/nrk/predis
      */
     $this->options = array_merge($opt,$this->options);
-    try {
-      $this->redis = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/',[
-        'prefix'              => 'core:'.$this->options['prefix'],
-        'exceptions'          => $this->options['exceptions'],
-        'connection_timeout'  => $this->options['timeout'],
-        'database'            => $this->options['database'],
-      ]);
-      $this->redis->select($this->options['database']);
-    } catch ( Exception $e ) {
-      die($e);
-    }
+    $this->redis = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/',[
+      'prefix'              => 'core:'.$this->options['prefix'],
+      'exceptions'          => $this->options['exceptions'],
+      'connection_timeout'  => $this->options['timeout'],
+      'database'            => $this->options['database'],
+    ]);
+    $this->redis->select($this->options['database']);
   }
 
   public function get($key){
