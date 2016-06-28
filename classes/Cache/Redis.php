@@ -70,7 +70,7 @@ class Redis implements Adapter {
 
   public function flush(){
     $keys = $this->redis->keys('*');
-    call_user_func_array([$this->redis,'del'],$keys);
+    return call_user_func_array([$this->redis,'flushall'],$keys);
   }
 
   public function inc($key,$value=1){
