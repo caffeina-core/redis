@@ -69,6 +69,7 @@ class Redis implements Adapter {
   }
 
   public function flush(){
+    if (empty($this->redis->keys('*'))) return false;
     return call_user_func_array([$this->redis,'eval'], ["return redis.call('del', unpack(redis.call('keys', ARGV[1])))", "0", "*"]);
   }
 
