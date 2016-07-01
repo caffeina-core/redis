@@ -70,7 +70,7 @@ class Redis implements Adapter {
   }
 
   public function flush(){
-    return $this->redis->flushDb();
+    return $this->redis->flushdb();
   }
 
   public function inc($key,$value=1){
