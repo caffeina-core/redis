@@ -58,7 +58,7 @@ class Redis implements Adapter {
   }
 
   public function set($key,$value,$expire=0){
-    return $expire >= 0 ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
+    return $expire >= 0 ? $this->redis->setEx($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
   }
 
   public function delete($key){
@@ -70,16 +70,14 @@ class Redis implements Adapter {
   }
 
   public function flush(){
-    return $this->redis->keys('*') 
-           ? $this->redis->eval("return redis.call('del', unpack(redis.call('keys', ARGV[1])))", "0", "*") 
-           : false;
+    return $this->redis->flushDb();
   }
 
   public function inc($key,$value=1){
-  	return $this->redis->incrby($key,$value);
+  	return $this->redis->incrBy($key,$value);
   }
 
   public function dec($key,$value=1){
-    return $this->redis->decrby($key,$value);
+    return $this->redis->decrBy($key,$value);
   }
 }
