@@ -6,9 +6,10 @@
  * Core\Cache Redis Driver.
  *
  * @package core
- * @author stefano.azzolini@caffeinalab.com
- * @version 1.0
- * @copyright Caffeina srl - 2014 - http://caffeina.co
+ * @author stefano.azzolini@caffeina.com
+ * @author gabriele.diener@caffeina.com
+ * @version 1.0.1
+ * @copyright Caffeina srl - 2014-2016 - http://caffeina.com
  */
 
 
@@ -43,7 +44,7 @@ class Redis implements Adapter {
      * https://github.com/nrk/predis
      */
     $this->options = array_merge($opt,$this->options);
-    $this->redis = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/',[
+    $this->redis   = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/', [
       'prefix'              => 'core:'.$this->options['prefix'],
       'exceptions'          => $this->options['exceptions'],
       'connection_timeout'  => $this->options['timeout'],
@@ -57,7 +58,7 @@ class Redis implements Adapter {
   }
 
   public function set($key,$value,$expire=0){
-    $expire ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
+    return $expire >= 0 ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
   }
 
   public function delete($key){
@@ -69,8 +70,9 @@ class Redis implements Adapter {
   }
 
   public function flush(){
-    if (empty($this->redis->keys('*'))) return false;
-    return call_user_func_array([$this->redis,'eval'], ["return redis.call('del', unpack(redis.call('keys', ARGV[1])))", "0", "*"]);
+    return $this->redis->keys('*') 
+           ? $this->redis->eval("return redis.call('del', unpack(redis.call('keys', ARGV[1])))", "0", "*") 
+           : false;
   }
 
   public function inc($key,$value=1){
