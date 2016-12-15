@@ -58,7 +58,8 @@ class Redis implements Adapter {
   }
 
   public function set($key,$value,$expire=0){
-    return $expire >= 0 ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
+    $expire = (int)$expire;
+    return $expire > 0 ? $this->redis->setex($key,$expire,serialize($value)) : $this->redis->set($key,serialize($value));
   }
 
   public function delete($key){
