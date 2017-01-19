@@ -63,7 +63,7 @@ class Redis implements Adapter {
   }
 
   public function delete($key){
-  	$this->redis->delete($key);
+  	$this->redis->del($key);
   }
 
   public function exists($key){
