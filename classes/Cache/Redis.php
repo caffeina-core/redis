@@ -43,7 +43,7 @@ class Redis implements Adapter {
      * Predis Docs:
      * https://github.com/nrk/predis
      */
-    $this->options = array_merge($opt,$this->options);
+    $this->options = array_merge($this->options, $opt);
     $this->redis   = new \Predis\Client($this->options['scheme'].'://'.$this->options['host'].':'.$this->options['port'].'/', [
       'prefix'              => 'core:'.$this->options['prefix'],
       'exceptions'          => $this->options['exceptions'],
